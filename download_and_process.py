@@ -2,8 +2,6 @@ import os
 import sys
 import re
 import json
-import urllib.request
-import zipfile
 from collections import defaultdict
 from tqdm import tqdm
 from bs4 import BeautifulSoup
@@ -25,6 +23,9 @@ def write_json(data, path, verbose=False):
         json.dump(data, f, indent=1, ensure_ascii=False)
 
 def download_corpus(ami_dir):
+    import urllib.request
+    import zipfile
+
     '''
         This function is modified from : 
             https://github.com/gcunhase/AMICorpusXML/blob/master/AMICorpusHandler.py
@@ -196,11 +197,11 @@ def parse_topic_from_meeting(meeting_path, default_topic, transcript_dir, debug=
 
 if __name__ == '__main__':
     ami_dir = 'data/ami_public_manual_1.6.2'
-    download_corpus('data/ami_public_manual_1.6.2')
+    transcript_output_dir = 'data/transcripts'
 
+    download_corpus(ami_dir)
     topic_dir = os.path.join(ami_dir, 'topics')
     transcript_dir = os.path.join(ami_dir, 'words')
-    transcript_output_dir = os.path.join('data', 'transcripts')
     
     # extract topic information and structure
     default_topic_path = os.path.join(ami_dir,'ontologies','default-topics.xml')
